@@ -11,6 +11,6 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/joshjohanning-org/simple-docker-action:latest'
   args:
     - ${{ inputs.who-to-greet }}
