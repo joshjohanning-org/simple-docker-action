@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Auth to ACR
+      run: echo ${{ secrets.ACR_PASSWORD }} | docker login --username test123j --password-stdin test123j.azurecr.io
+    - name: Build the Docker image
+      run: 
+        docker build . --file Dockerfile --tag test123j.azurecr.io/actions/simple-docker-action:${{ github.run_number }}
+
+    - name: Create additional tag
+      run: 
+        docker tag test123j.azurecr.io/actions/simple-docker-action:${{ github.run_number }} test123j.azurecr.io/actions/simple-docker-action:latest
+
+    - name: Push the Docker iamge
+      run: | 
+        docker push test123j.azurecr.io/actions/simple-docker-action:${{ github.run_number }}
+        docker push test123j.azurecr.io/actions/simple-docker-action:latest
