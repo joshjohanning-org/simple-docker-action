@@ -11,6 +11,6 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'docker://test123j.azurecr.io/actions/simple-docker-action:2'
+  image: 'docker://test123j.azurecr.io/actions/simple-docker-action:1'
   args:
     - ${{ inputs.who-to-greet }}
