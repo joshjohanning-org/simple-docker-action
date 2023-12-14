@@ -1,0 +1,19 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: joshjohanning-org/reusable-workflows/.github/workflows/docker-build.yml@v1.0.10
+    with:
+      runs-on: ubuntu-latest
+      image-repository: ghcr.io
+      image-name: ${{ github.repository }}
+      image-tag: ${{ github.run_number }}
+      dockerfile-path: Dockerfile
